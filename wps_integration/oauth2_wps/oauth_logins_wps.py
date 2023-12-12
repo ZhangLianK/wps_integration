@@ -4,7 +4,7 @@ import json
 
 import frappe
 import frappe.utils
-from tencent_integration.oauth2_weixin.oauth_weixin import login_via_oauth2, login_via_oauth2_id_token
+from wps_integration.oauth2_wps.oauth_wps import login_via_oauth2, login_via_oauth2_id_token
 
 @frappe.whitelist(allow_guest=True)
 def custom(code: str, state: str):

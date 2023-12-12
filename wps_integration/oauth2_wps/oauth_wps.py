@@ -81,7 +81,7 @@ def get_oauth2_authorize_url(provider: str, redirect_to: str) -> str:
 
 
 def get_oauth2_flow(provider: str):
-	from tencent_integration.oauth2_weixin.service_weixin import OAuth2Service
+	from wps_integration.oauth2_wps.service_wps import OAuth2Service
 
 	# get client_id and client_secret
 	params = get_oauth_keys(provider)
@@ -129,7 +129,7 @@ def get_info_via_oauth(
 
 	flow = get_oauth2_flow(provider)
 	oauth2_providers = get_oauth2_providers()
-
+	frappe.log_error('code',code)
 	args = {
 		"data": {
 			"code": code,
