@@ -167,7 +167,7 @@ def get_info_via_oauth(
 		frappe.log_error('oauth info',info)
 		if provider == "wps":
 			#generate the email and lower case the value
-			#info["email"] = info.get("openid").lower() + '@wps.com'
+			info["email"] = info.get("openid").lower() + '@wps.com'
 			pass
 			#frappe.log_error('oauth info',info)
 
@@ -327,16 +327,17 @@ def update_oauth_user(user: str, data: dict, provider: str):
 		#frappe.log_error('oauth user',user.name)
 	else:
 		user.update({"first_name": get_first_name(data)})
+		user.update({"last_name": get_last_name(data)})
 		user.save( ignore_permissions=True)
 		#frappe.log_error('oauth user',user.name)
 
 
 def get_first_name(data: dict) -> str:
-	return data.get("first_name") or data.get("given_name") or data.get("name") or data.get("nickname")
+	return data.get("first_name") or data.get("given_name") or data.get("name") or data.get("nickname")[0]
 
 
 def get_last_name(data: dict) -> str:
-	return data.get("last_name") or data.get("family_name")
+	return data.get("last_name") or data.get("family_name") or data.get("nickname")[1:]
 
 
 def get_email(data: dict) -> str:
