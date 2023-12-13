@@ -519,7 +519,7 @@ class OAuth2Service(Service):
         return self.access_token_response
 
     def get_access_token(self,
-                         method='POST',
+                         method='GET',
                          decoder=parse_utf8_qsl,
                          key='access_token',
                          **kwargs):
