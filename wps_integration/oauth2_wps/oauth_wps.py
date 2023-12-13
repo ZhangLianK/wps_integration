@@ -131,7 +131,7 @@ def get_info_via_oauth(
 	oauth2_providers = get_oauth2_providers()
 	frappe.log_error('code',code)
 	args = {
-		"data": {
+		"params": {
 			"code": code,
 			"redirect_uri": get_redirect_uri(provider),
 			"grant_type": "authorization_code",
