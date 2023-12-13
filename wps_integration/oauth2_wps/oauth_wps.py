@@ -156,11 +156,13 @@ def get_info_via_oauth(
 		#frappe.log_error('session token',session.access_token)
 		#add access_token to api_endpoint_args
 		api_endpoint_args['access_token'] = session.access_token
-		api_endpoint_args['openid'] = session.access_token_response.json().get('openid')
+		
+		api_endpoint_args['appid'] = session.access_token_response.json().get('token', {}).get('appid')
+
 		info_ori = session.get(api_endpoint, params=api_endpoint_args)
 		info_decoded = info_ori.content.decode('utf-8')
 		
-		info = json.loads(info_decoded)
+		info = json.loads(info_decoded).get('user', {})
   
 		frappe.log_error('oauth info',info)
 		if provider == "wps":
