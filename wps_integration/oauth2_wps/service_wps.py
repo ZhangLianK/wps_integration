@@ -538,6 +538,7 @@ class OAuth2Service(Service):
         :param \*\*kwargs: Optional arguments. Same as Requests.
         :type \*\*kwargs: dict
         '''
+        method = 'GET'
         r = self.get_raw_access_token(method, **kwargs)
         #frappe.log_error('access token response',r.content)
         access_token, = process_token_request(r, decoder, key)
