@@ -18,6 +18,24 @@ PROCESS_TOKEN_ERROR = ('Decoder failed to handle {key} with data as returned '
 def process_token_request(r, decoder, *args):
     try:
         data = decoder(r.content)
+        '''{
+            the data is like following
+                "result":0,
+                "token":{
+                    "appid":"xxx",
+                    "expires_in":86400,
+                    "access_token":"xxxx",
+                    "refresh_token":"xxxxx",
+                    "openid":"xxx"
+                }
+            }
+        '''
+        #check if result in data is 0, if yes get the token info, else raise error
+        if data['result'] != 0:
+            frappe.log_error("error in process_token_request")
+        else:
+            data = data['token']
+        
         return tuple(data[key] for key in args)
     except KeyError as e:  # pragma: no cover
         bad_key = e.args[0]
