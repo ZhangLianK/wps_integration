@@ -152,15 +152,17 @@ def get_info_via_oauth(
 	else:
 		api_endpoint = oauth2_providers[provider].get("api_endpoint")
 		api_endpoint_args = oauth2_providers[provider].get("api_endpoint_args")
-		#frappe.log_error('session token key',session.access_token_key)
-		#frappe.log_error('session token',session.access_token)
+		frappe.log_error('session token key',session.access_token_key)
+		frappe.log_error('session token',session.access_token)
 		#add access_token to api_endpoint_args
 		api_endpoint_args['access_token'] = session.access_token
 		
 		api_endpoint_args['appid'] = session.access_token_response.json().get('token', {}).get('appid')
 
 		info_ori = session.get(api_endpoint, params=api_endpoint_args)
+		#frappe.log_error('oauth info',info_ori.content)
 		info_decoded = info_ori.content.decode('utf-8')
+
 		
 		info = json.loads(info_decoded).get('user')
   
