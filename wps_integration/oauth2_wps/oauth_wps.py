@@ -279,7 +279,8 @@ def get_user_record(user: str, data: dict) -> "User":
 			"user_type": "Website User",
 			"user_image": data.get("picture") or data.get("avatar_url"),
 			"send_welcome_email": 0,
-			"username": data.get('openid'),
+			"username": data.get('company_uid'),
+			"location": data.get('company_id'),
 		}
 	)
 
@@ -329,6 +330,8 @@ def update_oauth_user(user: str, data: dict, provider: str):
 	else:
 		user.update({"first_name": get_first_name(data)})
 		user.update({"last_name": get_last_name(data)})
+		user.update({"username": data.get('company_uid')})
+		user.update({"location": data.get('company_id')})
 		user.save( ignore_permissions=True)
 		#frappe.log_error('oauth user',user.name)
 
