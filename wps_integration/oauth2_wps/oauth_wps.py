@@ -162,14 +162,13 @@ def get_info_via_oauth(
 		info_ori = session.get(api_endpoint, params=api_endpoint_args)
 		info_decoded = info_ori.content.decode('utf-8')
 		
-		info = json.loads(info_decoded).get('user', {})
+		info = json.loads(info_decoded).get('user')
   
 		frappe.log_error('oauth info',info)
 		if provider == "wps":
 			#generate the email and lower case the value
 			info["email"] = info.get("openid").lower() + '@wps.com'
 			pass
-			#frappe.log_error('oauth info',info)
 
 	if not (info.get("email_verified") or info.get("email")):
 		frappe.throw(_("Email not verified with {0}").format(provider.title()))
