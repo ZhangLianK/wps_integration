@@ -129,7 +129,7 @@ def get_info_via_oauth(
 
 	flow = get_oauth2_flow(provider)
 	oauth2_providers = get_oauth2_providers()
-	frappe.log_error('code',code)
+	#frappe.log_error('code',code)
 	args = {
 		"params": {
 			"code": code,
@@ -142,7 +142,7 @@ def get_info_via_oauth(
 		args["decoder"] = decoder
 
 	session = flow.get_auth_session(**args)
-	frappe.log_error('oauth session',session.access_token_response.content)
+	#frappe.log_error('oauth session',session.access_token_response.content)
 
 	if id_token:
 		parsed_access = json.loads(session.access_token_response.text)
@@ -152,8 +152,8 @@ def get_info_via_oauth(
 	else:
 		api_endpoint = oauth2_providers[provider].get("api_endpoint")
 		api_endpoint_args = oauth2_providers[provider].get("api_endpoint_args")
-		frappe.log_error('session token key',session.access_token_key)
-		frappe.log_error('session token',session.access_token)
+		#frappe.log_error('session token key',session.access_token_key)
+		#frappe.log_error('session token',session.access_token)
 		#add access_token to api_endpoint_args
 		api_endpoint_args['access_token'] = session.access_token
 		
@@ -166,7 +166,7 @@ def get_info_via_oauth(
 		
 		info = json.loads(info_decoded).get('user')
   
-		frappe.log_error('oauth info',info)
+		#frappe.log_error('oauth info',info)
 		if provider == "wps":
 			#generate the email and lower case the value
 			info["email"] = info.get("openid").lower() + '@wps.com'
